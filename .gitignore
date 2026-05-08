@@ -1,0 +1,29 @@
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+
+# Coverage
+coverage
+*.lcov
+
+# Editor / IDE
+.vscode/
+.idea/
+
+# Jest cache
+.jest-cache/
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Local SQLite — consumers wire their own DB; package itself never persists
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
