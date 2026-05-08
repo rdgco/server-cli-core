@@ -1,11 +1,9 @@
 /**
- * ESLint flat config (v9+). Adapted from midi-daddy's eslint.config.js
- * with project-specific blocks (browser-side apps, Max for Live)
- * stripped — server-cli-core is a Node-side library only.
+ * ESLint flat config (v9+).
  *
- * Conservative preset: @eslint/js recommended for real-bug rules
- * plus a curated stylistic block matching midi-daddy's house style
- * (single quotes, semicolons, 2-space indent).
+ * Conservative preset: @eslint/js recommended for real-bug rules,
+ * plus a curated stylistic block (single quotes, semicolons,
+ * 2-space indent, no trailing commas).
  */
 
 import js from '@eslint/js';

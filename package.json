@@ -1,7 +1,7 @@
 {
   "name": "server-cli-core",
   "version": "0.0.0",
-  "description": "Project-agnostic shell for building modular Node.js CLI servers — REPL, command dispatch, module discovery, shutdown handling. Extracted from midi-daddy.",
+  "description": "A small framework for building modular Node.js CLI servers. Provides a REPL prompt, a command-dispatch registry, module discovery, and a shutdown service — the chassis a domain-specific CLI server can layer its modules on top of.",
   "main": "index.js",
   "type": "module",
   "exports": {
