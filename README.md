@@ -9,10 +9,12 @@ cache, WebSocket event broadcaster, ambient transaction-context).
 
 Vanilla JS, native ESM, no build step, no native dependencies.
 
-> **Status:** pre-v0.1.0 chassis. v0.1.0 is the first tagged
-> release shipping the full shell — bootstrap, all bundled
-> modules, the dispatch chain, and the bundled `log`/`help`/
-> `history`/`quit` modules.
+> **Status:** v0.1.0 — first tagged release. Ships the full
+> shell: bootstrap, the 6-layer dispatch chain, bundled
+> `log`/`help`/`history`/`quit` modules, and the operational
+> primitives the README lists below. v0.x means breaking
+> changes are allowed in any minor bump; pin to a specific
+> minor and read release notes before upgrading.
 
 ## Why this package exists
 
