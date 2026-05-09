@@ -7,6 +7,9 @@
  * `package.json#exports`.
  */
 
+// Main entry point — typical consumer's index.js calls this and is done
+export { bootstrap } from './lib/bootstrap.js';
+
 // Command dispatch
 export { createDispatcher, flattenCommands } from './lib/command-registry.js';
 
