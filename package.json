@@ -71,7 +71,8 @@
     "transform": {},
     "roots": [
       "<rootDir>/lib",
-      "<rootDir>/modules"
+      "<rootDir>/modules",
+      "<rootDir>/examples"
     ],
     "testRegex": "\\.test\\.js$",
     "testPathIgnorePatterns": [
