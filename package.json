@@ -21,7 +21,13 @@
     "./lib/format.js": "./lib/format.js",
     "./lib/errors.js": "./lib/errors.js",
     "./lib/confirm.js": "./lib/confirm.js",
-    "./lib/prompt.js": "./lib/prompt.js"
+    "./lib/prompt.js": "./lib/prompt.js",
+    "./lib/module-registry.js": "./lib/module-registry.js",
+    "./modules/log/logger.js": "./modules/log/logger.js",
+    "./modules/log/log-commands.js": "./modules/log/log-commands.js",
+    "./modules/help/help-commands.js": "./modules/help/help-commands.js",
+    "./modules/history/history-commands.js": "./modules/history/history-commands.js",
+    "./modules/quit/quit-commands.js": "./modules/quit/quit-commands.js"
   },
   "scripts": {
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest",

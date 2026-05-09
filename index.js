@@ -120,3 +120,44 @@ export {
 // Synchronous type-to-confirm prompt — distinct from prompt.js's
 // async `confirmWithText`; kept reachable via subpath:
 //   import { confirmWithText } from 'server-cli-core/lib/confirm.js';
+
+// Module registry — set by the consumer's bootstrap, read by shell
+// modules that walk the loaded module map (e.g. help, log autocomplete)
+export {
+  setModules,
+  getModules,
+  clearModules
+} from './lib/module-registry.js';
+
+// Logger — file-backed, module/level-filtering aware
+export {
+  log,
+  logDebug,
+  logInfo,
+  logWarn,
+  logErrorMessage,
+  logTiming,
+  logCategory,
+  logObject,
+  initLogger,
+  enableLogging,
+  disableLogging,
+  isLoggingEnabled,
+  enableTiming,
+  disableTiming,
+  isTimingEnabled,
+  enableModule,
+  enableModules,
+  disableModule,
+  disableModules,
+  clearModuleFilters,
+  getModuleFilterStatus,
+  getLogPath,
+  getLogStats,
+  tailLog,
+  headLog,
+  clearLog,
+  getLoggerState,
+  setLoggerState,
+  cleanupLogger
+} from './modules/log/logger.js';
