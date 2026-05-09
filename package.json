@@ -6,7 +6,22 @@
   "type": "module",
   "exports": {
     ".": "./index.js",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./lib/command-registry.js": "./lib/command-registry.js",
+    "./lib/command-interceptors.js": "./lib/command-interceptors.js",
+    "./lib/shell-builtins.js": "./lib/shell-builtins.js",
+    "./lib/shutdown-service.js": "./lib/shutdown-service.js",
+    "./lib/status-contract.js": "./lib/status-contract.js",
+    "./lib/session-state.js": "./lib/session-state.js",
+    "./lib/sqlite-connection.js": "./lib/sqlite-connection.js",
+    "./lib/telemetry-context.js": "./lib/telemetry-context.js",
+    "./lib/event-broadcaster.js": "./lib/event-broadcaster.js",
+    "./lib/history.js": "./lib/history.js",
+    "./lib/files.js": "./lib/files.js",
+    "./lib/format.js": "./lib/format.js",
+    "./lib/errors.js": "./lib/errors.js",
+    "./lib/confirm.js": "./lib/confirm.js",
+    "./lib/prompt.js": "./lib/prompt.js"
   },
   "scripts": {
     "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
@@ -30,6 +45,10 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rdgco/server-cli-core.git"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "readline-sync": "^1.4.10"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
