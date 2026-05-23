@@ -9,14 +9,24 @@ cache, WebSocket event broadcaster, ambient transaction-context).
 
 Vanilla JS, native ESM, no build step, no native dependencies.
 
-> **Status:** v0.1.0 — first tagged release. Ships the full
-> shell: bootstrap, the 6-layer dispatch chain, bundled
-> `log`/`help`/`history`/`quit` modules, and the operational
-> primitives the README lists below. v0.x means breaking
-> changes are allowed in any minor bump; pin to a specific
-> minor and read release notes before upgrading.
+It is used for electron apps that are not just CLI based but
+connecting to the node server from a browser. A full app can
+be developed in command line commands, and later a web interface
+can be implemented using the same commands supported by the modules. 
 
 ## Why this package exists
+
+It was clear when developing the platform app using AI that
+a very modular approach was needed. It needed to be well defined
+what a module looks like, how to invoke different commands in
+the module, and how modules can interact with each other.
+
+Additionally, i did not want to concern myself with the web
+interface initially. That came later for the platform app.
+
+The concept of using metadata to define the commands available
+in a module has proven valuable for agentic workflows and
+human user interfaces. 
 
 Node has plenty of one-shot CLI frameworks ([commander],
 [yargs], [oclif]) and prompt libraries ([inquirer], [ink]).
@@ -45,12 +55,12 @@ dispatch idea:
   hooks any module can register at load time.
 - **Status contract** — typed `{ level, summary, details, issues }`
   per module so a generic renderer covers all of them.
-- **Session-state KV** — namespaced JSON KV with atomic writes.
+- **Session-state Key Value file store ** — namespaced JSON with atomic writes.
 - **Shared SQLite connection cache** — opt-in helper for
   consumers that persist to SQLite.
 - **Event broadcaster** — generic WebSocket pub/sub primitive
   for streaming server events to browser clients.
-- **Telemetry-context primitives** — ambient transaction IDs
+- **Telemetry-context primitives** — ambient transaction IDs for timing statistics.
   that flow through async cleanup.
 
 If your project is a **one-shot CLI** (`mycli command --flag`),
@@ -230,7 +240,7 @@ that want internal helpers.
 
 | Export | What it does |
 |---|---|
-| `sessionState` (default) | Namespaced JSON KV: `{ configure, get, set, update, clear, has, destroy, exists }`. |
+| `sessionState` (default) | Namespaced JSON Key Value file store: `{ configure, get, set, update, clear, has, destroy, exists }`. |
 | `getSessionState`, `setSessionState`, `updateSessionState`, `clearSessionState`, `hasSessionState`, `destroySessionState`, `sessionStateExists`, `configureSessionState` | The same surface as named exports, prefixed for top-level barrel imports. |
 
 ### SQLite connection cache
