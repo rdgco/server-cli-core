@@ -14,6 +14,12 @@ connecting to the node server from a browser. A full app can
 be developed in command line commands, and later a web interface
 can be implemented using the same commands supported by the modules. 
 
+## WARNING - no security layer implemented yet
+
+This is intended to run locally on a computer, if you open a socket
+for listening, then it is open to anybody in your network with visibility
+to your address. This will probably get implemented as a different package.
+
 ## Why this package exists
 
 It was clear when developing the platform app using AI that
