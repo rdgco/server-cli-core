@@ -45,7 +45,17 @@ operator-only.
   command. Read-only `gh` commands are fine.
 - **Never amend, rewrite, squash, or otherwise modify pushed
   commit history.** The operator handles cleanup before merge.
-- **Never create or modify tags.** Operator handles releases.
+- **Never modify or move existing tags**, and never create a tag
+  on your own initiative. **Tag creation is operator-delegated**:
+  when the operator explicitly says "tag and push vX.Y.Z" after
+  a version-bump PR merges, create the annotated tag on the merge
+  commit of `main` and push it (`git tag -a vX.Y.Z <merge-sha> -m
+  "…" && git push origin vX.Y.Z`). Stick to the exact name and
+  commit the operator specified — never freelance a different
+  name, retag, or modify an existing tag. Mirrors the language
+  in `visualization-layer-core`, `visualization-bundle-examples`,
+  `visualization-harness`, and `midi-daddy` so the same
+  delegation flow works across the ecosystem.
 - **Never bypass the pre-commit hook with `--no-verify`** unless
   the operator explicitly asks for it. The hook
   (`.husky/pre-commit`) runs `npm run lint && npm test` and
