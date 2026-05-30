@@ -1,6 +1,6 @@
 {
   "name": "server-cli-core",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "A small framework for building modular Node.js CLI servers. Provides a REPL prompt, a command-dispatch registry, module discovery, and a shutdown service — the chassis a domain-specific CLI server can layer its modules on top of.",
   "main": "index.js",
   "type": "module",
