@@ -93,6 +93,19 @@ on:
   session-state KV, sqlite-cache, event-broadcaster,
   telemetry-context).
 
+## Module Conventions
+
+- **Directory name is the dispatch key.** The module's directory name
+  is what users type at the prompt and what `getModules()` exposes.
+  `metadata.prefix` is vestigial — omit it from new modules and remove
+  it from existing ones opportunistically. Do not add dispatch logic
+  that reads `metadata.prefix`; if a module genuinely needs a prefix
+  that differs from its directory name, raise it as a design question
+  rather than patching bootstrap.
+- **The REPL is for testing and architecture inspection, not end-user
+  convenience.** Shortcuts and aliases that hide structure are actively
+  unhelpful; transparent 1:1 naming (directory = command) is the goal.
+
 ## Project Shape
 
 - **Vanilla JS, native ESM** — `import`/`export`, no CommonJS,
