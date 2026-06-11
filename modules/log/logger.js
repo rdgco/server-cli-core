@@ -1,8 +1,3 @@
-/**
- * Centralized Logging System
- * Provides debug logging to file with runtime enable/disable
- */
-
 import fs from 'fs';
 import path from 'path';
 import { ensureDir } from '../../lib/files.js';
@@ -54,12 +49,10 @@ let disabledModules = new Map();
  */
 function rollLogs() {
   try {
-    // Delete previous backup if it exists
     if (fs.existsSync(LOG_PATH_PREV)) {
       fs.unlinkSync(LOG_PATH_PREV);
     }
 
-    // Roll current log to backup
     if (fs.existsSync(LOG_PATH)) {
       fs.renameSync(LOG_PATH, LOG_PATH_PREV);
     }
@@ -75,11 +68,7 @@ function rollLogs() {
 export function initLogger() {
   try {
     ensureDir(LOGS_DIR);
-
-    // Roll logs on startup
     rollLogs();
-
-    // Enable logging by default
     enableLogging();
   } catch (error) {
     console.error('[Logger] Failed to initialize logger:', error.message);
@@ -92,18 +81,14 @@ export function initLogger() {
  */
 export function enableLogging() {
   if (loggingEnabled) {
-    return true; // Already enabled
+    return true;
   }
 
   try {
     ensureDir(LOGS_DIR);
-
-    // Open log file in append mode
     logStream = fs.createWriteStream(LOG_PATH, { flags: 'a' });
-
     loggingEnabled = true;
 
-    // Write separator and timestamp
     const timestamp = new Date().toISOString();
     logStream.write(`\n${'='.repeat(80)}\n`);
     logStream.write(`[${timestamp}] Logging enabled\n`);
@@ -122,7 +107,7 @@ export function enableLogging() {
  */
 export function disableLogging() {
   if (!loggingEnabled) {
-    return true; // Already disabled
+    return true;
   }
 
   try {
@@ -205,7 +190,6 @@ export function enableModule(module, level = null, createWhitelist = false) {
     const disabledLevels = disabledModules.get(normalizedModule);
 
     if (disabledLevels === null) {
-      // Was fully disabled, now re-enable
       disabledModules.delete(normalizedModule);
     } else if (normalizedLevel) {
       // Remove the specified level and above from disabled set
@@ -220,12 +204,10 @@ export function enableModule(module, level = null, createWhitelist = false) {
         disabledModules.delete(normalizedModule);
       }
     } else {
-      // No level specified, remove entirely
       disabledModules.delete(normalizedModule);
     }
   }
 
-  // Add to whitelist if we're in whitelist mode
   if (inWhitelistMode) {
     enabledModules.set(normalizedModule, normalizedLevel);
   }
@@ -262,11 +244,9 @@ export function disableModule(module, level = null) {
     return;
   }
 
-  // Remove from whitelist if present
   enabledModules.delete(normalizedModule);
 
   if (normalizedLevel) {
-    // Disable only a specific level
     if (!disabledModules.has(normalizedModule)) {
       disabledModules.set(normalizedModule, new Set());
     }
@@ -275,7 +255,6 @@ export function disableModule(module, level = null) {
       disabledLevels.add(normalizedLevel);
     }
   } else {
-    // Disable all levels for this module
     disabledModules.set(normalizedModule, null);
   }
 }
@@ -312,7 +291,6 @@ export function getModuleFilterStatus() {
     mode = 'whitelist'; // Only logging enabled modules
   }
 
-  // Format enabled modules with their levels
   const enabled = [];
   for (const [mod, minLevel] of enabledModules.entries()) {
     if (minLevel) {
@@ -323,7 +301,6 @@ export function getModuleFilterStatus() {
   }
   enabled.sort();
 
-  // Format disabled modules with their levels
   const disabled = [];
   for (const [mod, levels] of disabledModules.entries()) {
     if (levels === null) {
@@ -350,17 +327,14 @@ function isModuleLevelEnabled(module, level) {
   const normalizedLevel = level.toLowerCase();
   const levelValue = LOG_LEVELS[normalizedLevel];
 
-  // Check blacklist first
   if (disabledModules.has(normalizedModule)) {
     const disabledLevels = disabledModules.get(normalizedModule);
 
     if (disabledLevels === null) {
-      // Entire module is disabled
       return false;
     }
 
     if (disabledLevels.has(normalizedLevel)) {
-      // This specific level is disabled
       return false;
     }
   }
@@ -370,7 +344,6 @@ function isModuleLevelEnabled(module, level) {
     return true;
   }
 
-  // Check whitelist
   if (!enabledModules.has(normalizedModule)) {
     return false;
   }
@@ -381,7 +354,6 @@ function isModuleLevelEnabled(module, level) {
     return true;
   }
 
-  // Check if level is at or above minimum
   const minLevelValue = LOG_LEVELS[minLevel];
   return levelValue >= minLevelValue;
 }
@@ -439,19 +411,18 @@ export function getLogStats() {
  */
 export function log(message, module = null, level = 'info') {
   if (!loggingEnabled || !logStream) {
-    return; // Drop message
+    return;
   }
 
-  // Check module/level filter
   if (!isModuleLevelEnabled(module, level)) {
-    return; // Filtered out
+    return;
   }
 
   try {
     const timestamp = new Date().toISOString();
     logStream.write(`[${timestamp}] ${message}\n`);
   } catch (_error) {
-    // Silently fail - don't spam console
+    /* ignore */
   }
 }
 
@@ -485,7 +456,7 @@ export function logTiming(message) {
     try {
       logStream.write(`[${timestamp}] [TIMING] ${message}\n`);
     } catch (_error) {
-      // Silently fail
+      /* ignore */
     }
   }
 }
@@ -600,18 +571,15 @@ export function headLog(n = 10) {
  */
 export function clearLog() {
   try {
-    // Close stream if open
     if (logStream) {
       logStream.end();
       logStream = null;
     }
 
-    // Delete file
     if (fs.existsSync(LOG_PATH)) {
       fs.unlinkSync(LOG_PATH);
     }
 
-    // Reopen stream if logging was enabled
     if (loggingEnabled) {
       logStream = fs.createWriteStream(LOG_PATH, { flags: 'a' });
       const timestamp = new Date().toISOString();
@@ -626,7 +594,7 @@ export function clearLog() {
 }
 
 // ============================================================================
-// Cue State Serialization
+// State Serialization
 // ============================================================================
 
 /**
@@ -663,18 +631,15 @@ export function getLoggerState() {
 export function setLoggerState(state) {
   if (!state) return;
 
-  // Clear existing filters
   enabledModules.clear();
   disabledModules.clear();
 
-  // Restore enabled modules
   if (state.enabledModules) {
     for (const [mod, level] of Object.entries(state.enabledModules)) {
       enabledModules.set(mod, level);
     }
   }
 
-  // Restore disabled modules
   if (state.disabledModules) {
     for (const [mod, levels] of Object.entries(state.disabledModules)) {
       if (levels === null) {
@@ -685,7 +650,6 @@ export function setLoggerState(state) {
     }
   }
 
-  // Enable/disable logging
   if (state.enabled && !loggingEnabled) {
     enableLogging();
   } else if (!state.enabled && loggingEnabled) {
@@ -707,7 +671,7 @@ export function cleanupLogger() {
       logStream.write(`\n[${timestamp}] Shutting down\n`);
       logStream.end();
     } catch (_error) {
-      // Ignore errors during cleanup
+      /* ignore */
     }
   }
 }

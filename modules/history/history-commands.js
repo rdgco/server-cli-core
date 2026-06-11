@@ -1,8 +1,3 @@
-/**
- * History Commands Module
- * Command history management
- */
-
 import { getHistory, clearHistory as clearHistoryLib, getStats } from '../../lib/history.js';
 import { createDispatcher } from '../../lib/command-registry.js';
 
