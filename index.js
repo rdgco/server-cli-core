@@ -7,10 +7,8 @@
  * `package.json#exports`.
  */
 
-// Main entry point — typical consumer's index.js calls this and is done
 export { bootstrap } from './lib/bootstrap.js';
 
-// Command dispatch
 export { createDispatcher, flattenCommands } from './lib/command-registry.js';
 
 // Command interceptors (pre-dispatch + unknown-command hooks)
@@ -74,7 +72,6 @@ export {
   broadcastStateUpdate
 } from './lib/event-broadcaster.js';
 
-// CLI history
 export {
   loadHistory,
   saveHistory,
@@ -84,7 +81,6 @@ export {
   getStats as getHistoryStats
 } from './lib/history.js';
 
-// File helpers
 export {
   getDirname,
   loadJsonFile,
@@ -94,7 +90,6 @@ export {
   listDirectories
 } from './lib/files.js';
 
-// Formatting helpers
 export {
   formatBytes,
   formatDuration,
@@ -103,7 +98,6 @@ export {
   truncate
 } from './lib/format.js';
 
-// Error helpers
 export {
   logError,
   withErrorHandling,

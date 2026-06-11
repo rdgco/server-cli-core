@@ -1,8 +1,3 @@
-/**
- * Help Commands Module
- * Display available commands from all modules
- */
-
 import { getModules } from '../../lib/module-registry.js';
 import { flattenCommands } from '../../lib/command-registry.js';
 
@@ -31,9 +26,6 @@ export const metadata = {
  * @returns {[string[], string]} Tuple of [completions, line]
  */
 export function autocomplete(parts, line) {
-  // parts[0] = "help"
-  // parts[1] = module name (optional)
-
   if (parts.length === 2) {
     const modules = getModules();
     const moduleNames = Object.keys(modules);
@@ -57,12 +49,10 @@ export function autocomplete(parts, line) {
 export async function handle(commandParts) {
   const moduleName = commandParts[0];
 
-  // If no module specified, show summary
   if (!moduleName) {
     return showSummary();
   }
 
-  // Otherwise show detailed help for specific module
   return showModuleHelp(moduleName);
 }
 
@@ -85,7 +75,6 @@ function showSummary() {
 
   console.log('\nAvailable modules:\n');
 
-  // Get all module names sorted alphabetically
   const moduleNames = Object.keys(modules).sort((a, b) => a.localeCompare(b));
 
   moduleNames.forEach(moduleName => {
@@ -112,7 +101,6 @@ function showSummary() {
 function showModuleHelp(moduleName) {
   const modules = getModules();
 
-  // Find module by prefix (case-insensitive)
   const moduleKey = Object.keys(modules).find(key => {
     const module = modules[key];
     const prefix = module.metadata?.prefix || key;

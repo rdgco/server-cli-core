@@ -1,8 +1,3 @@
-/**
- * Log Commands Module
- * Provides CLI interface for logging system
- */
-
 import {
   enableLogging,
   disableLogging,
@@ -24,7 +19,6 @@ import { formatBytes } from '../../lib/format.js';
 import { createDispatcher } from '../../lib/command-registry.js';
 import { getModules } from '../../lib/module-registry.js';
 
-// Valid log levels
 const VALID_LEVELS = ['debug', 'info', 'warn', 'error'];
 
 const TAIL_HEAD_SUGGESTIONS = ['10', '20', '50', '100', '200', '500'];
@@ -143,7 +137,6 @@ export const autocomplete = dispatcher.autocomplete;
  * @returns {Promise<boolean>} Success status
  */
 export async function enable(args = []) {
-  // First ensure logging is enabled
   if (!isLoggingEnabled()) {
     const success = enableLogging();
     if (!success) {
@@ -152,18 +145,15 @@ export async function enable(args = []) {
     }
   }
 
-  // No args - just enable logging for everything
   if (args.length === 0) {
     console.log('✓ Logging enabled (all modules, all levels)');
     console.log(`  Writing to: ${getLogPath()}`);
     return true;
   }
 
-  // Parse module and optional level
   const moduleName = args[0].toLowerCase();
   const level = args[1] ? args[1].toLowerCase() : null;
 
-  // Validate level if provided
   if (level && !VALID_LEVELS.includes(level)) {
     console.log(`✗ Invalid log level: ${level}`);
     console.log(`  Valid levels: ${VALID_LEVELS.join(', ')}`);
@@ -172,11 +162,9 @@ export async function enable(args = []) {
 
   const filterStatus = getModuleFilterStatus();
 
-  // Determine if we should create whitelist mode
   const wasJustEnabled = filterStatus.mode === 'all';
 
   if (wasJustEnabled) {
-    // User is starting fresh with specific module - create whitelist
     enableModule(moduleName, level, true);
     if (level) {
       console.log(`✓ Logging enabled for ${moduleName} at ${level.toUpperCase()} and above`);
@@ -184,7 +172,6 @@ export async function enable(args = []) {
       console.log(`✓ Logging enabled for ${moduleName} (all levels)`);
     }
   } else if (filterStatus.mode === 'blacklist') {
-    // Remove from blacklist
     enableModule(moduleName, level, false);
     if (level) {
       console.log(`✓ Re-enabled logging for ${moduleName} at ${level.toUpperCase()} and above`);
@@ -192,7 +179,6 @@ export async function enable(args = []) {
       console.log(`✓ Re-enabled logging for ${moduleName}`);
     }
   } else {
-    // Already in whitelist mode - add to whitelist
     enableModule(moduleName, level, false);
     if (level) {
       console.log(`✓ Added ${moduleName} at ${level.toUpperCase()}+ to whitelist`);
@@ -220,7 +206,6 @@ export async function enable(args = []) {
  * @returns {Promise<boolean>} Success status
  */
 export async function disable(args = []) {
-  // No args - disable logging completely
   if (args.length === 0) {
     const success = disableLogging();
 
@@ -233,11 +218,9 @@ export async function disable(args = []) {
     return success;
   }
 
-  // Parse module and optional level
   const moduleName = args[0].toLowerCase();
   const level = args[1] ? args[1].toLowerCase() : null;
 
-  // Validate level if provided
   if (level && !VALID_LEVELS.includes(level)) {
     console.log(`✗ Invalid log level: ${level}`);
     console.log(`  Valid levels: ${VALID_LEVELS.join(', ')}`);
@@ -292,7 +275,6 @@ export async function status() {
     console.log(`  Path: ${stats.path}`);
   }
 
-  // Show module filter status
   console.log('');
   console.log('Module Filtering:');
 
