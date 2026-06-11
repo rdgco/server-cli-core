@@ -5,7 +5,6 @@ Strip noise comments from all source files. One PR: `feature/compress-comments`.
 ## Rubric
 
 **Delete entirely:**
-- JSDoc blocks whose only content is `@param {type} name` / `@returns {type}` — no description line
 - Inline comments that narrate what the immediately following code obviously does
 - Duplicate notes (keep first, delete rest)
 - Double section dividers (`// ===...===` followed immediately by another `// ===...===`)
@@ -20,7 +19,7 @@ Strip noise comments from all source files. One PR: `feature/compress-comments`.
 
 **Compress (signal buried in verbosity):**
 - File-level headers: keep architecture notes and table lists, trim pure prose
-- JSDoc on complex functions: keep description line(s), strip `@param`/`@returns` lines that only restate the signature
+- JSDoc on complex functions: keep description line(s) and all `@param`/`@returns` lines
 
 ## Files to Process
 
