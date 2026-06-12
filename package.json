@@ -77,6 +77,17 @@
     "testRegex": "\\.test\\.js$",
     "testPathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "collectCoverageFrom": [
+      "lib/**/*.js",
+      "modules/**/*.js",
+      "examples/**/*.js",
+      "!**/*.test.js"
+    ],
+    "coverageReporters": [
+      "text-summary",
+      "lcov",
+      "json-summary"
     ]
   }
 }
