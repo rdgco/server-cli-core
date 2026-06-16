@@ -57,6 +57,9 @@
     "better-sqlite3": "^12.6.2",
     "readline-sync": "^1.4.10"
   },
+  "allowScripts": {
+    "better-sqlite3": true
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@jest/globals": "^30.2.0",
